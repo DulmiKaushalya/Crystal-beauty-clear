@@ -1,41 +1,27 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import studentRoute from './routes/studentRoute.js';
+import itemRoute from './routes/itemRoute.js';
+//import Student from './models/student.js';//import ctrl + space,model name use (export default Student)
 
-let app = express();
+
+
+const app = express();
+
+mongoose.connect('mongodb+srv://admin:123@cluster0.r07te.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0').then(
+    ()=>{
+        console.log('Connected to database')
+    },
+    (error)=>{
+        console.log('Error connecting to database')
+    }
+);
 
 app.use(bodyParser.json());//middleware
 
-app.get('/',
-    (req,res)=>{
-        console.log(req.body)
-        console.log('Get request received');
-        res.json({message: 'Hello World'});
-    }
-);
-
-app.post('/',
-    (req,res)=>{
-        console.log(req.body)
-        console.log('Post request received');
-        res.json({message: 'Hello dul'});
-    }
-);
-
-app.put('/',
-    (req,res)=>{
-        console.log(req.body)
-        console.log('Put request received');
-        res.json({message: 'Hello Put'});
-    }
-);
-
-app.delete('/',
-    (req,res)=>{
-        console.log(req.body)
-        console.log('Delete request received');
-        res.json({message: 'Hello Delete'});
-    }
-);
+app.use('/students', studentRoute);
+app.use('/items', itemRoute);
 
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');
