@@ -20,8 +20,8 @@ mongoose.connect('mongodb+srv://admin:123@cluster0.r07te.mongodb.net/?retryWrite
 
 app.use(bodyParser.json());//middleware
 
-app.use('/students', studentRoute);
-app.use('/items', itemRoute);
+app.use('/api/students', studentRoute);
+app.use('/api/items', itemRoute);
 
 app.listen(5000, () => {
   console.log('Server is listening on port 5000');
